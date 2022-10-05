@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: contosoapp
+  labels:
+    app: contoso
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: contoso
+  template:
+    metadata:
+      labels:
+        app: contoso
+      # Uncomment the following annotations to enable Dapr
+      # annotations:
+      #   dapr.io/enabled: "true"
+      #   dapr.io/app-id: "contosoapp"
+      #   dapr.io/enable-api-logging: "true"
+    spec:
+      containers:
+        - name: contoso
+          image: ghcr.io/shubham1172/daprcon/contoso:latest
+          resources:
+            limits:
+              cpu: 1
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 100Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: contoso
+  labels:
+    name: contoso
+spec:
+  selector:
+    app: contoso
+  type: LoadBalancer
+  ports:
+    - port: 8080
+      name: http
+      targetPort: 80
+      protocol: TCP
