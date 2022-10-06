@@ -15,7 +15,7 @@ const (
 )
 
 var (
-	client             = &http.Client{Timeout: 5 * time.Second}
+	client             = &http.Client{Timeout: 30 * time.Second}
 	availabilityApiUrl = "http://localhost:8000"
 	productApiUrl      = "http://localhost:8001"
 )

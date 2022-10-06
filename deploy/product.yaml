@@ -18,6 +18,7 @@ spec:
         dapr.io/enabled: "true"
         dapr.io/app-id: "productapp"
         dapr.io/app-port: "8001"
+        dapr.io/config: "appconfig"
         dapr.io/enable-api-logging: "true"
         dapr.io/log-level: "debug"
     spec:
