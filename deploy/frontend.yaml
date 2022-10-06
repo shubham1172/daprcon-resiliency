@@ -24,9 +24,9 @@ spec:
           image: ghcr.io/shubham1172/daprcon/frontend:latest
           env:
             - name: WHEREBUY_AVAILABILITY_API_URL
-              value: http://10.0.159.141
+              value: http://10.0.222.30
             - name: WHEREBUY_PRODUCT_API_URL
-              value: http://10.0.8.115
+              value: http://10.0.157.207
           resources:
             limits:
               cpu: 1

@@ -19,8 +19,8 @@ var (
 	productApiUrl      = "http://localhost:8001"
 )
 
-func getAvailability(id string) (bool, error) {
-	res, err := client.Get(availabilityApiUrl + "/check?id=" + id)
+func getAvailability(id, scenario string) (bool, error) {
+	res, err := client.Get(availabilityApiUrl + "/check?id=" + id + "&scenario=" + scenario)
 	if err != nil {
 		log.Println(err)
 		return false, err
@@ -63,14 +63,16 @@ func handleRoot(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Welcome to WhereBuy! Use /query?id= to query for an item.")
 }
 
-func handleInfo(w http.ResponseWriter, r *http.Request) {
+func handleQuery(w http.ResponseWriter, r *http.Request) {
 	itemId := r.URL.Query().Get("id")
 	if itemId == "" {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
-	available, err := getAvailability(itemId)
+	scenario := r.URL.Query().Get("scenario")
+
+	available, err := getAvailability(itemId, scenario)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
@@ -107,7 +109,7 @@ func main() {
 		port = fmt.Sprintf("%d", defaultPort)
 	}
 
-	http.HandleFunc("/query", handleInfo)
+	http.HandleFunc("/query", handleQuery)
 	http.HandleFunc("/", handleRoot)
 	log.Fatal(http.ListenAndServe(":"+port, nil))
 }

@@ -24,7 +24,7 @@ spec:
           image: ghcr.io/shubham1172/daprcon/availability:latest
           env:
             - name: CONTOSO_API_URL
-              value: http://10.0.109.171
+              value: http://10.0.88.74
           resources:
             limits:
               cpu: 1
