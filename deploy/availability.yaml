@@ -22,13 +22,15 @@ spec:
       containers:
         - name: availability
           image: ghcr.io/shubham1172/daprcon/availability:latest
+          env:
+            - name: CONTOSO_API_URL
+              value: http://10.0.109.171
           resources:
             limits:
               cpu: 1
               memory: 1Gi
-            requests:
-              cpu: 100m
-              memory: 100Mi
+          ports:
+            - containerPort: 8000
 ---
 apiVersion: v1
 kind: Service
@@ -41,7 +43,6 @@ spec:
     app: availability
   type: LoadBalancer
   ports:
-    - port: 8000
-      name: http
-      targetPort: 80
-      protocol: TCP
+    - protocol: TCP
+      port: 80
+      targetPort: 8000

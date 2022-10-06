@@ -5,14 +5,17 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"time"
 )
 
 var (
+	defaultPort   = 8000
 	contosoApiUrl = "http://localhost:8080"
+	client        = &http.Client{Timeout: 5 * time.Second}
 )
 
 func handleAvailability(w http.ResponseWriter, r *http.Request) {
-	res, err := http.Get(contosoApiUrl + "/check?id=" + r.URL.Query().Get("id"))
+	res, err := client.Get(contosoApiUrl + "/check?id=" + r.URL.Query().Get("id"))
 	if err != nil {
 		log.Println(err)
 		w.WriteHeader(http.StatusInternalServerError)
@@ -36,7 +39,7 @@ func main() {
 
 	port, ok := os.LookupEnv("WHEREBUY_AVAILABILITY_PORT")
 	if !ok {
-		port = "8000"
+		port = fmt.Sprintf("%d", defaultPort)
 	}
 
 	http.HandleFunc("/check", handleAvailability)

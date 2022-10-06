@@ -6,7 +6,7 @@ WORKDIR /app
 COPY go.* ./
 COPY *.go ./
 
-RUN go build -o /availability
+RUN GOOS=linux GOARCH=amd64 go build -o /availability
 
 ## Deploy
 FROM alpine:3.16
