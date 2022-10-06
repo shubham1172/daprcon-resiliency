@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"net/url"
 	"os"
 	"time"
 )
@@ -19,8 +20,8 @@ var (
 	productApiUrl      = "http://localhost:8001"
 )
 
-func getAvailability(id, scenario string) (bool, error) {
-	res, err := client.Get(availabilityApiUrl + "/check?id=" + id + "&scenario=" + scenario)
+func getAvailability(data map[string][]string) (bool, error) {
+	res, err := client.PostForm(availabilityApiUrl, data)
 	if err != nil {
 		log.Println(err)
 		return false, err
@@ -37,8 +38,8 @@ func getAvailability(id, scenario string) (bool, error) {
 	return false, nil
 }
 
-func getProductInfo(id string) (string, error) {
-	res, err := client.Get(productApiUrl + "/get?id=" + id)
+func getProductInfo(data map[string][]string) (string, error) {
+	res, err := client.PostForm(productApiUrl, data)
 	if err != nil {
 		log.Println(err)
 		return "", err
@@ -64,22 +65,28 @@ func handleRoot(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleQuery(w http.ResponseWriter, r *http.Request) {
-	itemId := r.URL.Query().Get("id")
+	itemId := r.FormValue("id")
 	if itemId == "" {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
-	scenario := r.URL.Query().Get("scenario")
+	scenario := r.FormValue("scenario")
+	data := url.Values{
+		"id":       {itemId},
+		"scenario": {scenario},
+	}
 
-	available, err := getAvailability(itemId, scenario)
+	available, err := getAvailability(data)
 	if err != nil {
+		log.Printf("Error getting availability: %s", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
-	productInfo, err := getProductInfo(itemId)
+	productInfo, err := getProductInfo(data)
 	if err != nil {
+		log.Printf("Error getting product info: %s", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}

@@ -18,16 +18,16 @@ var (
 )
 
 func handleAvailability(w http.ResponseWriter, r *http.Request) {
-	itemID := r.URL.Query().Get("id")
+	itemID := r.FormValue("id")
 	if itemID == "" {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
-	scenario := r.URL.Query().Get("scenario")
+	scenario := r.FormValue("scenario")
 
 	// Check availability with Contoso API
-	res, err := client.Get(contosoApiUrl + "/check?id=" + itemID + "&scenario=" + scenario)
+	res, err := client.Get(contosoApiUrl + "?id=" + itemID + "&scenario=" + scenario)
 	if err != nil {
 		log.Println(err)
 		w.WriteHeader(http.StatusInternalServerError)
@@ -41,12 +41,12 @@ func handleAvailability(w http.ResponseWriter, r *http.Request) {
 
 	if res.StatusCode == http.StatusNotFound {
 		w.WriteHeader(http.StatusNotFound)
-		fmt.Fprintf(w, "Item %s is not available", r.URL.Query().Get("id"))
+		fmt.Fprintf(w, "Item %s is not available", itemID)
 		return
 	}
 
 	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, "Item %s is available", r.URL.Query().Get("id"))
+	fmt.Fprintf(w, "Item %s is available", itemID)
 }
 
 func main() {

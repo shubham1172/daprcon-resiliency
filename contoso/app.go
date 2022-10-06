@@ -30,13 +30,13 @@ func isAvailable(id string) bool {
 }
 
 func handleAvailability(w http.ResponseWriter, r *http.Request) {
-	itemID := r.URL.Query().Get("id")
+	itemID := r.FormValue("id")
 	if itemID == "" {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
-	scenario := r.URL.Query().Get("scenario")
+	scenario := r.FormValue("scenario")
 	if scenario == "slow" {
 		time.Sleep(time.Duration(rand.Intn(delayInSeconds)) * time.Second)
 	} else if scenario == "error" {

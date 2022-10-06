@@ -13,6 +13,12 @@ spec:
     metadata:
       labels:
         app: product
+      # Uncomment the following annotations to enable Dapr
+      # annotations:
+      #   dapr.io/enabled: "true"
+      #   dapr.io/app-id: "productapp"
+      #   dapr.io/enable-api-logging: "true"
+      #   dapr.io/log-level: "debug"
     spec:
       containers:
         - name: product

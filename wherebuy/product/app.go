@@ -25,7 +25,7 @@ var (
 )
 
 func handleProduct(w http.ResponseWriter, r *http.Request) {
-	itemId := r.URL.Query().Get("id")
+	itemId := r.FormValue("id")
 	if itemId == "" {
 		w.WriteHeader(http.StatusBadRequest)
 		return
