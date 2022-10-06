@@ -1,0 +1,72 @@
+[
+    {
+        "id": "1",
+        "name": "LG Monitor 32LF630V",
+        "price": "20000",
+        "currency": "INR",
+        "rating": "4.5"
+    },
+    {
+        "id": "2",
+        "name": "XBOX series S",
+        "price": "35000",
+        "currency": "INR",
+        "rating": "4.9"
+    },
+    {
+        "id": "3",
+        "name": "Apple iPhone 12",
+        "price": "80000",
+        "currency": "INR",
+        "rating": "4.8"
+    },
+    {
+        "id": "4",
+        "name": "Sony earbuds",
+        "price": "15000",
+        "currency": "INR",
+        "rating": "4.1"
+    },
+    {
+        "id": "5",
+        "name": "Samsung Galaxy S21",
+        "price": "60000",
+        "currency": "INR",
+        "rating": "4.7"
+    },
+    {
+        "id": "6",
+        "name": "Apple Airpods",
+        "price": "20000",
+        "currency": "INR",
+        "rating": "4.3"
+    },
+    {
+        "id": "7",
+        "name": "Dell Keyboard and Mouse",
+        "price": "1000",
+        "currency": "INR",
+        "rating": "4.2"
+    },
+    {
+        "id": "8",
+        "name": "Dell Inspiron Laptop",
+        "price": "50000",
+        "currency": "INR",
+        "rating": "4.6"
+    },
+    {
+        "id": "9",
+        "name": "Apple Watch",
+        "price": "40000",
+        "currency": "INR",
+        "rating": "4.4"
+    },
+    {
+        "id": "10",
+        "name": "Samsung Galaxy Watch",
+        "price": "30000",
+        "currency": "INR",
+        "rating": "4.5"
+    }
+]

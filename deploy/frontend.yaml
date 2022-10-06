@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontendapp
+  labels:
+    app: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+      # Uncomment the following annotations to enable Dapr
+      # annotations:
+      #   dapr.io/enabled: "true"
+      #   dapr.io/app-id: "frontendapp"
+      #   dapr.io/enable-api-logging: "true"
+    spec:
+      containers:
+        - name: frontend
+          image: ghcr.io/shubham1172/daprcon/frontend:latest
+          env:
+            - name: WHEREBUY_AVAILABILITY_API_URL
+              value: http://10.0.159.141
+            - name: WHEREBUY_PRODUCT_API_URL
+              value: http://10.0.8.115
+          resources:
+            limits:
+              cpu: 1
+              memory: 1Gi
+          ports:
+            - containerPort: 9000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  labels:
+    name: frontend
+spec:
+  selector:
+    app: frontend
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 9000

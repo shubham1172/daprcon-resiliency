@@ -13,11 +13,6 @@ spec:
     metadata:
       labels:
         app: contoso
-      # Uncomment the following annotations to enable Dapr
-      # annotations:
-      #   dapr.io/enabled: "true"
-      #   dapr.io/app-id: "contosoapp"
-      #   dapr.io/enable-api-logging: "true"
     spec:
       containers:
         - name: contoso

@@ -5,25 +5,58 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 	"time"
 )
 
+const (
+	defaultPort = 8000
+)
+
 var (
-	defaultPort   = 8000
 	contosoApiUrl = "http://localhost:8080"
 	client        = &http.Client{Timeout: 5 * time.Second}
 )
 
 func handleAvailability(w http.ResponseWriter, r *http.Request) {
-	res, err := client.Get(contosoApiUrl + "/check?id=" + r.URL.Query().Get("id"))
+	itemID := r.URL.Query().Get("id")
+	if itemID == "" {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	// for this example, only IDs 1 to 10 are available
+	itemIdInt, err := strconv.Atoi(itemID)
+	if err != nil {
+		log.Println(err)
+		w.WriteHeader(http.StatusNotFound)
+		fmt.Fprintf(w, "Item %s is not available", r.URL.Query().Get("id"))
+
+		return
+	}
+
+	if itemIdInt < 1 || itemIdInt > 10 {
+		w.WriteHeader(http.StatusNotFound)
+		fmt.Fprintf(w, "Item %s is not available", r.URL.Query().Get("id"))
+		return
+	}
+
+	// Check availability with Contoso API
+	res, err := client.Get(contosoApiUrl + "/check?id=" + itemID)
 	if err != nil {
 		log.Println(err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
-	if res.StatusCode != http.StatusOK {
+	if res.StatusCode != http.StatusOK && res.StatusCode != http.StatusNotFound {
 		w.WriteHeader(res.StatusCode)
+		return
+	}
+
+	if res.StatusCode == http.StatusNotFound {
+		w.WriteHeader(http.StatusNotFound)
+		fmt.Fprintf(w, "Item %s is not available", r.URL.Query().Get("id"))
 		return
 	}
 

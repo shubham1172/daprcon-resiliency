@@ -20,8 +20,8 @@ func handleAvailability(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Randomly wait between 0 to 20 seconds
-	time.Sleep(time.Duration(rand.Intn(20)) * time.Second)
+	// Randomly wait between 0 to 10 seconds to simulate a slow API.
+	time.Sleep(time.Duration(rand.Intn(10)) * time.Second)
 
 	// Check availability
 	fmt.Fprintf(w, "Item %s is available", itemID)
