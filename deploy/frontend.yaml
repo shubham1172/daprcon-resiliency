@@ -14,26 +14,27 @@ spec:
       labels:
         app: frontend
       # Uncomment the following annotations to enable Dapr
-      # annotations:
-      #   dapr.io/enabled: "true"
-      #   dapr.io/app-id: "frontendapp"
-      #   dapr.io/enable-api-logging: "true"
-      #   dapr.io/log-level: "debug"
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "frontendapp"
+        dapr.io/app-port: "9000"
+        dapr.io/enable-api-logging: "true"
+        dapr.io/log-level: "debug"
     spec:
       containers:
         - name: frontend
           image: ghcr.io/shubham1172/daprcon/frontend:latest
           env:
             # Use these when Dapr is disabled
-            - name: WHEREBUY_AVAILABILITY_API_URL
-              value: http://10.0.63.150/check
-            - name: WHEREBUY_PRODUCT_API_URL
-              value: http://10.0.1.86/get
-            # Use these when Dapr is enabled
             # - name: WHEREBUY_AVAILABILITY_API_URL
-            #   value: http://localhost:3500/v1.0/invoke/availabilityapp/method
+            #   value: http://availability/check
             # - name: WHEREBUY_PRODUCT_API_URL
-            #   value: http://localhost:3500/v1.0/invoke/productapp/method
+            #   value: http://product/get
+            # Use these when Dapr is enabled
+            - name: WHEREBUY_AVAILABILITY_API_URL
+              value: http://localhost:3500/v1.0/invoke/availabilityapp/method/check
+            - name: WHEREBUY_PRODUCT_API_URL
+              value: http://localhost:3500/v1.0/invoke/productapp/method/get
           resources:
             limits:
               cpu: 1
