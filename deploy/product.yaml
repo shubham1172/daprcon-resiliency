@@ -14,21 +14,21 @@ spec:
       labels:
         app: product
       # Uncomment the following annotations to enable Dapr
-      annotations:
-        dapr.io/enabled: "true"
-        dapr.io/app-id: "productapp"
-        dapr.io/app-port: "8001"
-        dapr.io/config: "appconfig"
-        dapr.io/enable-api-logging: "true"
-        dapr.io/log-level: "debug"
+      # annotations:
+      #   dapr.io/enabled: "true"
+      #   dapr.io/app-id: "productapp"
+      #   dapr.io/app-port: "8001"
+      #   dapr.io/config: "appconfig"
+      #   dapr.io/enable-api-logging: "true"
+      #   dapr.io/log-level: "debug"
     spec:
       containers:
         - name: product
           image: ghcr.io/shubham1172/daprcon/product:latest
           resources:
             limits:
-              cpu: 1
-              memory: 1Gi
+              cpu: "1"
+              memory: "1Gi"
           ports:
             - containerPort: 8001
 ---

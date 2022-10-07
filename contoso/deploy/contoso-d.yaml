@@ -19,7 +19,7 @@ spec:
           image: ghcr.io/shubham1172/daprcon/contoso:latest
           resources:
             limits:
-              cpu: 1
-              memory: 1Gi
+              cpu: "1"
+              memory: "1Gi"
           ports:
             - containerPort: 8080

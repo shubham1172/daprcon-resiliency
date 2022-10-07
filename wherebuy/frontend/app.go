@@ -7,7 +7,6 @@ import (
 	"net/http"
 	"net/url"
 	"os"
-	"time"
 )
 
 const (
@@ -15,7 +14,7 @@ const (
 )
 
 var (
-	client             = &http.Client{Timeout: 30 * time.Second}
+	client             = &http.Client{}
 	availabilityApiUrl = "http://localhost:8000"
 	productApiUrl      = "http://localhost:8001"
 )
